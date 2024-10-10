@@ -11,6 +11,7 @@ async def users_root():
         "Author Name": "Coaixy",
         "Author Email": "Coaixy@outlook.com",
         "Author Github": "Coaixy"
+
     }
 
 
@@ -24,3 +25,11 @@ async def login(username: str, password: str):
     else:
         return {""
                 "status": False, "message": "用户名或密码错误"}
+
+
+@router.get("/register")
+async def register(username: str, password: str):
+    if user_config.create_new_user(username, password):
+        return {"status": True, "message": "注册成功"}
+    else:
+        return {"status": False, "message": "用户已存在"}
