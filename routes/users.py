@@ -22,4 +22,5 @@ async def login(username: str, password: str):
             , "token": token}
 
     else:
-        return {"status": False, "message": "用户名或密码错误"}
+        return {""
+                "status": False, "message": "用户名或密码错误"}
