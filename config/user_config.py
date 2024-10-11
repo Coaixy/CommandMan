@@ -15,6 +15,15 @@ def verify_password(user_name: str, user_pwd: str) -> bool:
     return pwd == user_pwd
 
 
+def change_password(user_name: str, user_pwd: str) -> bool:
+    if verify_password(user_name, user_pwd):
+        config['users'][user_name] = user_pwd
+        with open('config.ini', 'w', encoding='utf-8') as configfile:
+            config.write(configfile)
+        return True
+    return False
+
+
 def create_new_user(user_name: str, user_pwd: str) -> bool:
     # 如果用户已存在，返回 False
     if config['users'].get(user_name) is not None:
@@ -38,6 +47,7 @@ def add_coins(user_name: str, coins: int) -> bool:
         config.write(configfile)
     return True
 
+
 def pay_coins(user_name: str, coins: int) -> bool:
     current_coins = get_coins(user_name)
     if current_coins < coins:
@@ -47,6 +57,6 @@ def pay_coins(user_name: str, coins: int) -> bool:
         config.write(configfile)
     return True
 
+
 def get_all_users() -> KeysView[str]:
     return config['users'].keys()
-
