@@ -4,7 +4,15 @@ from config import user_config, login_token
 
 router = APIRouter()
 
+"""
+User Controller 
 
+Login 
+Register 
+Change Password
+Use Command
+
+"""
 @router.get("/")
 async def users_root():
     return {
