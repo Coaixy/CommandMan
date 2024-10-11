@@ -13,6 +13,8 @@ Change Password
 Use Command
 
 """
+
+
 @router.get("/")
 async def users_root():
     return {
@@ -41,3 +43,13 @@ async def register(username: str, password: str):
         return {"status": True, "message": "注册成功"}
     else:
         return {"status": False, "message": "用户已存在"}
+
+
+@router.get("/change_password")
+async def change_password(username: str, password: str):
+    if user_config.change_password(username, password):
+        return {"status": True, "message": "密码修改成功"}
+    else:
+        return {"status": False, "message": "用户不存在"}
+
+
