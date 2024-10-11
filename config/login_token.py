@@ -1,6 +1,8 @@
 import hashlib
 import time
 
+from sympy import false
+
 # 登录 token 的 SALT
 LOGIN_HASH = "CommandMan"
 
@@ -48,3 +50,15 @@ def create_token(username: str) -> tuple[bool, str]:
             'token': token
         }
         return True, token
+
+
+def get_user(token: str) -> tuple[bool, str]:
+    """
+        通过 token 获取用户名
+        :param token: token
+        :return: str
+    """
+    for username, data in LOGIN_TOKEN_MAP.items():
+        if data['token'] == token:
+            return True, username
+    return False, ''
