@@ -1,6 +1,8 @@
 import configparser
 from typing import KeysView
 
+from config import login_token
+
 config = configparser.ConfigParser()
 config.read('config.ini')
 
@@ -46,27 +48,34 @@ def create_new_user(user_name: str, user_pwd: str) -> bool:
 #     return True
 
 
-def get_coins(user_name: str) -> int:
-    return int(config['coins'].get(user_name))
+def get_coins_by_token(token: str) -> tuple[bool, int]:
+    """
+        通过 token 获取用户金币
+        :param token: token
+        :return: tuple[bool, int]
+            bool: 是否获取成功
+            int: 金币数量
+    """
+    statue, user = login_token.get_user(token)
+    if not statue:
+        return False, 0
+    else:
+        return True, int(config['coins'][user])
+
+# Admin Func
+def get_coins_by_username(user_name: str) -> int:
+    return int(config['coins'][user_name])
 
 
+# Admin Func
+def get_all_users() -> KeysView[str]:
+    return config['users'].keys()
+
+
+# Admin Func
 def add_coins(user_name: str, coins: int) -> bool:
-    current_coins = get_coins(user_name)
+    current_coins = get_coins_by_username(user_name)
     config['coins'][user_name] = str(current_coins + coins)
     with open('config.ini', 'w', encoding='utf-8') as configfile:  # type: SupportsWrite[str]
         config.write(configfile)
     return True
-
-
-def pay_coins(user_name: str, coins: int) -> bool:
-    current_coins = get_coins(user_name)
-    if current_coins < coins:
-        return False
-    config['coins'][user_name] = str(current_coins - coins)
-    with open('config.ini', 'w', encoding='utf-8') as configfile:  # type: SupportsWrite[str]
-        config.write(configfile)
-    return True
-
-
-def get_all_users() -> KeysView[str]:
-    return config['users'].keys()
