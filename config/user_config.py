@@ -35,6 +35,16 @@ def create_new_user(user_name: str, user_pwd: str) -> bool:
         config.write(configfile)
     return True
 
+# Todo(Change to Token and add command param)
+# def pay_coins(user_name: str, coins: int) -> bool:
+#     current_coins = get_coins(user_name)
+#     if current_coins < coins:
+#         return False
+#     config['coins'][user_name] = str(current_coins - coins)
+#     with open('config.ini', 'w', encoding='utf-8') as configfile:  # type: SupportsWrite[str]
+#         config.write(configfile)
+#     return True
+
 
 def get_coins(user_name: str) -> int:
     return int(config['coins'].get(user_name))
