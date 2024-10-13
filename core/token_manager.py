@@ -1,8 +1,6 @@
 import hashlib
 import time
 
-from sympy import false
-
 # 登录 token 的 SALT
 LOGIN_HASH = "CommandMan"
 
