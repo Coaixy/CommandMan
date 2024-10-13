@@ -1,7 +1,7 @@
 import configparser
 from typing import KeysView
 
-from config import login_token
+from core import token_manager
 
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -56,7 +56,7 @@ def get_coins_by_token(token: str) -> tuple[bool, int]:
             bool: 是否获取成功
             int: 金币数量
     """
-    statue, user = login_token.get_user(token)
+    statue, user = token_manager.get_user(token)
     if not statue:
         return False, 0
     else:

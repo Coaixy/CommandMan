@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
-from config import user_config, login_token
+from config import user_config
+from core import token_manager
 
 router = APIRouter()
 
@@ -28,7 +29,7 @@ async def users_root():
 @router.get("/login")
 async def login(username: str, password: str):
     if user_config.verify_password(username, password):
-        statue, token = login_token.create_token(username)
+        statue, token = token_manager.create_token(username)
         return {"status": statue
             , "token": token}
 

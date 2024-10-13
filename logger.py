@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from config import login_token
+from core import token_manager
 
 
 def generate_log_file_name(token: str, command_name: str) -> str:
@@ -10,7 +10,7 @@ def generate_log_file_name(token: str, command_name: str) -> str:
     :param command_name: command name
     :return: str
     """
-    statue, user_name = login_token.get_user(token)
+    statue, user_name = token_manager.get_user(token)
     if not statue:
         return ''
     time = datetime.now().strftime('%Y-%m-%d_%H:%M:%S')
